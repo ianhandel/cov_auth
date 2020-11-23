@@ -12,6 +12,7 @@ library(tidyverse)
 library(lubridate)
 library(RcppRoll)
 library(ggrepel)
+library(ggthemr)
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
