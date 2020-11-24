@@ -40,7 +40,7 @@ get_la_data <- function(){
     )
 
   
-  readr::read_csv("https://www.opendata.nhs.scot/dataset/b318bddf-a4dc-4262-971f-0ba329e09b87/resource/427f9a25-db22-4014-a3bc-893b68243055/download/trend_ca_20201123.csv") %>% 
+  readr::read_csv("https://www.opendata.nhs.scot/dataset/b318bddf-a4dc-4262-971f-0ba329e09b87/resource/427f9a25-db22-4014-a3bc-893b68243055/download/trend_ca.csv") %>% 
     janitor::clean_names() %>% 
     mutate(date = ymd(date)) %>% 
     mutate(ca_name = str_replace_all(ca_name, "&", "and")) %>% 
@@ -54,7 +54,8 @@ get_la_data <- function(){
 
 x <- get_la_data()
 
-authorities <- c("City of Edinburgh", "Argyll and Bute", "Scottish Borders")
+authorities <- c("City of Edinburgh", "Argyll and Bute",
+                 "Scottish Borders", "Midlothian")
 
 ggthemr(palette = "light", text_size = 22, type = "outer")
 
@@ -69,7 +70,7 @@ ggplot() +
   aes(x = date,y = positive_7d_rate,
       group = ca_name, colour = ca_name) +
   geom_line(lwd = 2) +
-  geom_text_repel(aes(label = label), hjust = -0.05, show.legend = FALSE) +
+  geom_text_repel(aes(label = label), hjust = -0.05, show.legend = FALSE, direction = "y") +
   scale_x_date(expand = expansion(mult = c(0, 0.35))) +
   labs(title = "Seven day cases per 100,000",
        x = "Date",
@@ -77,5 +78,6 @@ ggplot() +
        colour = "Authority") +
   scale_color_manual(values = c("Scottish Borders" = swatch()[1],
                          "Argyll and Bute" = swatch()[2],
-                         "City of Edinburgh" = swatch()[3])) +
+                         "City of Edinburgh" = swatch()[3],
+                         "Midlothian" = swatch()[4])) +
   theme(legend.position = "none")
