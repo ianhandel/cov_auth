@@ -64,7 +64,7 @@ x %>%
   filter(ca_name %in% authorities) %>%
   group_by(ca_name) %>% 
   mutate(label = if_else(date == max(date, na.rm = TRUE),
-                         ca_name, NA_character_)) %>% 
+                         str_glue("{ca_name} ({round(positive_7d_rate)})"), NA_character_)) %>% 
   ungroup() %>% 
 ggplot() +
   aes(x = date,y = positive_7d_rate,
