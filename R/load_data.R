@@ -71,7 +71,7 @@ x <- x %>%
   mutate(label = if_else(date == max(date, na.rm = TRUE),
                          str_glue("{ca_name} ({round(positive_7d_rate)})"), NA_character_))%>% 
   mutate(label_pos = if_else(date == max(date, na.rm = TRUE),
-                         str_glue("{ca_name} ({round(positive_test_rate_7d)}%)"), NA_character_)) %>% 
+                         str_glue("{ca_name} ({round(positive_test_rate_7d, 1)}%)"), NA_character_)) %>% 
   ungroup()
 
 x %>% 
@@ -108,7 +108,7 @@ x %>%
   labs(title = "COVID 19 pos test rate by Council Area",
        subtitle = str_glue("To {format(now() - days(3), format = '%d-%m-%Y')})"),
        x = "Date",
-       y = "Cases (7 day sum per 100,000)",
+       y = "Test positivity %",
        colour = "Authority") +
   scale_color_manual(values = c("Scottish Borders" = swatch()[1],
                                 "Argyll and Bute" = swatch()[2],
