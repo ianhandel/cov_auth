@@ -3,12 +3,14 @@ plot_positivity <- function(dat){
     ggplot() +
     aes(x = date,y = positive_test_rate_7d,
         group = ca_name, colour = ca_name) +
-    geom_line(lwd = 1.5) +
+    geom_line(lwd = 1.5,
+              aes(alpha = factor(date < (now() - days(3))))) +
     geom_text_repel(aes(label = label_pos),
                     hjust = -0.1, segment.colour = NA,
                     show.legend = FALSE, size = 5,
                     direction = "y") +
     scale_x_date(expand = expansion(mult = c(0, 0.5))) +
+    scale_alpha_manual(values = c(0.3, 1.0)) +
     labs(title = "COVID 19 pos test rate by Council Area",
          subtitle = str_glue("To {format(now() - days(3), format = '%d-%m-%Y')})"),
          x = "Date",
@@ -17,7 +19,8 @@ plot_positivity <- function(dat){
     scale_color_manual(values = c("Scottish Borders" = swatch()[1],
                                   "Argyll and Bute" = swatch()[2],
                                   "City of Edinburgh" = swatch()[3],
-                                  "Midlothian" = swatch()[4])) +
+                                  "Midlothian" = swatch()[4],
+                                  "Glasgow City" = swatch()[5])) +
     theme(legend.position = "none")
   
 }
